@@ -14,7 +14,16 @@ public record DatosDetalleRespuesta(
         this(
                 respuesta.getId(),
                 respuesta.getMensaje(),
-                respuesta.getAutor().getNombre(),
-                respuesta.getFechaCreacion());
+                getNombreAutorSeguro(respuesta),
+                respuesta.getFechaCreacion()
+        );
+    }
+
+    private static String getNombreAutorSeguro(Respuesta respuesta){
+        try{
+            return respuesta.getAutor().getNombre();
+        }catch (jakarta.persistence.EntityNotFoundException | NullPointerException e){
+            return "Usuario Eliminado";
+        }
     }
 }

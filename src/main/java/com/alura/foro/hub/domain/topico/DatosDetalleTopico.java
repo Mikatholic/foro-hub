@@ -18,9 +18,17 @@ public record DatosDetalleTopico(
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getStatus(),
-                topico.getAutor().getNombre(),
+                getNombreAutorSeguro(topico),
                 topico.getCurso().getNombre()
 
         );
+    }
+
+    private static String getNombreAutorSeguro(Topico topico){
+        try{
+            return topico.getAutor().getNombre();
+        }catch (Exception e){
+            return "Usuario Eliminado";
+        }
     }
 }
